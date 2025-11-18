@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أساسيات لغة بايثون</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Cairo", sans-serif;
+        background-color: #b3d9ff; /* أزرق فاتح */
+        color: #5a189a; /* موف غامق */
+    }
+
+    #welcomeScreen {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        background: linear-gradient(135deg, #74c0fc, #a5d8ff);
+        color: #fff;
+    }
+
+    #welcomeScreen h1 {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px #00000050;
+    }
+
+    #welcomeScreen p {
+        font-size: 1.4em;
+        margin-bottom: 30px;
+    }
+
+    #welcomeScreen button {
+        background-color: #5a189a;
+        color: #ffffff;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.2em;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+    #welcomeScreen button:hover {
+        background-color: #3c096c;
+        transform: scale(1.05);
+    }
+
+    #content {
+        display: none;
+        padding: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .card {
+        background-color: #ffffff;
+        width: 300px;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-in-out;
+    }
+
+    .card.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        color: #5a189a;
+        border-bottom: 2px solid #5a189a;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    .card p, .card ul {
+        line-height: 1.7;
+        font-size: 1.1em;
+    }
+
+    ul {
+        margin-right: 20px;
+    }
+
+    pre {
+        direction: ltr;
+        background-color: #000000;
+        color: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-family: monospace;
+        font-size: 0.95em;
+        line-height: 1.5;
+    }
+
+    .keyword { color: #569CD6; font-weight: bold; }
+    .function { color: #DCDCAA; }
+    .string { color: #CE9178; }
+    .number { color: #B5CEA8; }
+
+    .heart {
+        color: red;
+        display: inline-block;
+        animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.3); opacity: 1; }
+        100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    .close-btn {
+        background-color: #5a189a;
+        color: #fff;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.2em;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+        margin-top: 40px;
+    }
+
+    .close-btn:hover {
+        background-color: #3c096c;
+        transform: scale(1.05);
+    }
+
+    /* زر الفيديو */
+    #watchBtn {
+        background-color: #5a189a;
+        color: #fff;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        cursor: pointer;
+        margin-bottom: 15px;
+        transition: 0.3s;
+    }
+
+    #watchBtn:hover {
+        background-color: #3c096c;
+        transform: scale(1.05);
+    }
+
+    #videoContainer {
+        display: none;
+        margin-bottom: 20px;
+    }
+
+</style>
+</head>
+<body>
+
+<!-- شاشة الترحيب -->
+<div id="welcomeScreen">
+    <h1>مرحبًا بك في عالم بايثون <span class="heart">❤</span></h1>
+    <p>تعرف على أساسيات لغة بايثون بطريقة سهلة وممتعة!</p>
+    <button onclick="showContent()">ابدأ التعلم</button>
+</div>
+
+<!-- المحتوى -->
+<div id="content">
+
+    <div class="card">
+        <h2>ما هي لغة بايثون؟</h2>
+        <p>لغة <strong>بايثون (Python)</strong> هي لغة برمجة عالية المستوى وسهلة القراءة، تُستخدم في تطوير المواقع، والذكاء الاصطناعي، وتحليل البيانات، والأمن السيبراني، وغير ذلك الكثير.</p>
+        <ul>
+            <li>مفتوحة المصدر ومجانية.</li>
+            <li>تعمل على جميع أنظمة التشغيل.</li>
+            <li>تحظى بدعم كبير من المجتمع البرمجي.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>المتغيرات (Variables)</h2>
+        <p>المتغير هو اسم نستخدمه لتخزين قيمة يمكن تغييرها أثناء تنفيذ البرنامج.</p>
+        <pre>
+<span class="keyword">x</span> = <span class="number">5</span>
+<span class="keyword">y</span> = <span class="number">10</span>
+<span class="keyword">sum</span> = x + y
+<span class="function">print</span>(<span class="string">"الناتج هو:"</span>, sum)
+        </pre>
+    </div>
+
+    <div class="card">
+        <h2>أنواع البيانات (Data Types)</h2>
+        <p>تتعدد أنواع البيانات في بايثون وتشمل:</p>
+        <ul>
+            <li><strong>int</strong>: الأعداد الصحيحة (مثال: 5)</li>
+            <li><strong>float</strong>: الأعداد العشرية (مثال: 3.14)</li>
+            <li><strong>str</strong>: النصوص (مثال: "مرحبا")</li>
+            <li><strong>list</strong>: القوائم</li>
+            <li><strong>dict</strong>: القواميس</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>التحكم في تدفق البرنامج (Control Flow)</h2>
+        <p>بايثون تتيح لك استخدام عبارات مثل <code>if</code> و <code>for</code> و <code>while</code> للتحكم في سير البرنامج.</p>
+        <pre>
+<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):
+    <span class="function">print</span>(i)
+        </pre>
+    </div>
+
+    <div class="card">
+        <h2>الدوال (Functions)</h2>
+        <p>الدوال تسمح لك بإعادة استخدام الأكواد وتبسيط البرنامج.</p>
+        <pre>
+<span class="keyword">def</span> greet(name):
+    <span class="function">return</span> f<span class="string">"مرحبًا، {name}!"</span>
+
+<span class="function">print</span>(greet(<span class="string">"هدى"</span>))
+        </pre>
+    </div>
+
+    <div class="card">
+        <h2>المكتبات (Libraries)</h2>
+        <p>توفر بايثون مكتبات قوية تسهل المهام المختلفة، مثل:</p>
+        <ul>
+            <li><strong>NumPy</strong> - العمليات الرياضية والمصفوفات</li>
+            <li><strong>Pandas</strong> - تحليل البيانات</li>
+            <li><strong>Matplotlib</strong> - عرض الرسوم البيانية</li>
+            <li><strong>Requests</strong> - التعامل مع الإنترنت</li>
+        </ul>
+    </div>
+
+    <!-- زر مشاهدة الفيديو -->
+    <button id="watchBtn" type="button">مشاهدة الفيديو لبدء التعلم</button>
+
+    <!-- الفيديو (مخفي بالبداية) -->
+    <div id="videoContainer">
+      <video id="myVideo" width="100%" controls playsinline preload="metadata">
+        <source src="python_intro.mp4" type="video/mp4">
+       
+      </video>
+    </div>
+
+    <button class="close-btn" onclick="closePage()">تم الاطلاع</button>
+
+</div>
+
+<script>
+function showContent() {
+    document.getElementById('welcomeScreen').style.display = 'none';
+    document.getElementById('content').style.display = 'flex';
+
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('visible');
+        }, index * 300);
+    });
+
+    window.scrollTo(0,0);
+}
+
+function closePage() {
+    alert("شكرًا لاطلاعك على الدرس 💜");
+    window.close();
+}
+
+// كود زر الفيديو
+(function(){
+    const btn = document.getElementById('watchBtn');
+    const container = document.getElementById('videoContainer');
+    const video = document.getElementById('myVideo');
+
+    btn.addEventListener('click', function () {
+      container.style.display = 'block';
+      video.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      video.play().catch(err => {
+        console.log('auto-play blocked:', err);
+        video.setAttribute('controls', '');
+      });
+    });
+})();
+</script>
+
+</body>
+</html>
